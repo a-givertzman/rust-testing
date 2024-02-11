@@ -1,6 +1,6 @@
 use rand::{rngs::ThreadRng, Rng};
 
-use crate::entities::test_value::Value;
+use crate::entity::test_value::Value;
 
 ///
 /// Produces random Value

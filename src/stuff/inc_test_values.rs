@@ -1,6 +1,6 @@
 use log::debug;
 
-use crate::entities::test_value::Value;
+use crate::entity::test_value::Value;
 
 ///
 /// Simply iterates through the incrementing value by +1, begining from the initial
