@@ -1,3 +1,7 @@
+pub mod test_session;
+
+pub mod test_stuff;
+
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }

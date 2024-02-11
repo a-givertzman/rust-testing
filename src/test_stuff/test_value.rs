@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
 
-use crate::core_::point::point_type::{PointType, ToPoint};
-
+///
+/// Enum wrapper for some elementary types
 #[derive(Debug, Clone)]
 pub enum Value {
     Bool(bool),
@@ -16,14 +16,6 @@ impl Value {
             Value::Int(v) => v.to_string(),
             Value::Float(v) => v.to_string(),
             Value::String(v) => v.to_string(),
-        }
-    }
-    pub fn toPoint(&self, txId: usize, name: &str) -> PointType {
-        match self {
-            Value::Bool(value) => value.toPoint(txId, name),
-            Value::Int(value) => value.toPoint(txId, name),
-            Value::Float(value) => value.toPoint(txId, name),
-            Value::String(value) => value.clone().toPoint(txId, name),
         }
     }
     ///
