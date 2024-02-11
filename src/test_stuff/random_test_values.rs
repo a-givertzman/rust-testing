@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 use rand::{rngs::ThreadRng, Rng};
 
 use super::test_value::Value;
@@ -30,7 +28,7 @@ impl RandomTestValues {
     }
     }
 ///
-/// 
+/// Iterates through the random value
 impl Iterator for RandomTestValues {
     type Item = Value;
     //

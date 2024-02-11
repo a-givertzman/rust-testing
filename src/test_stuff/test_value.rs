@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 ///
 /// Enum wrapper for some elementary types
 #[derive(Debug, Clone)]
@@ -10,7 +8,7 @@ pub enum Value {
     String(String),
 }
 impl Value {
-    pub fn toString(&self) -> String {
+    pub fn to_string(&self) -> String {
         match &self {
             Value::Bool(v) => v.to_string(),
             Value::Int(v) => v.to_string(),
@@ -20,7 +18,7 @@ impl Value {
     }
     ///
     /// Returns Bool content, otherwise panic
-    pub fn asBool(&self) -> bool {
+    pub fn as_bool(&self) -> bool {
         match self {
             Value::Bool(value) => *value,
             _ => panic!("Value.asBool | {:?} - is not an Bool", self),
@@ -28,7 +26,7 @@ impl Value {
     }
     ///
     /// Returns Int content, otherwise panic
-    pub fn asInt(&self) -> i64 {
+    pub fn as_int(&self) -> i64 {
         match self {
             Value::Int(value) => *value,
             _ => panic!("Value.asInt | {:?} - is not an Int", self),
@@ -36,7 +34,7 @@ impl Value {
     }
     ///
     /// Returns Float content, otherwise panic
-    pub fn asFLoat(&self) -> f64 {
+    pub fn as_float(&self) -> f64 {
         match self {
             Value::Float(value) => *value,
             _ => panic!("Value.asFloat | {:?} - is not a Float", self),
@@ -44,7 +42,7 @@ impl Value {
     }
     ///
     /// Returns String content, otherwise panic
-    pub fn asString(&self) -> String {
+    pub fn as_string(&self) -> String {
         match self {
             Value::String(value) => value.clone(),
             _ => panic!("Value.asString | {:?} - is not a String", self),
