@@ -3,7 +3,6 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 
 static TCP_PORT_COUNTER: AtomicUsize = AtomicUsize::new(9000);
 
-
 ///
 /// TestSession::freeTcpPort() to get any free available TCP port
 pub struct TestSession {}

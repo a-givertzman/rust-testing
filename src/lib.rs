@@ -2,24 +2,14 @@
 /// Basic toolkit for rust project testing purposes
 
 
-/// 
-/// 
-pub mod test_session;
 ///
 /// 
-pub mod test_stuff;
+pub mod entities;
 
-// pub fn add(left: usize, right: usize) -> usize {
-//     left + right
-// }
+/// 
+/// 
+pub mod session;
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-
-//     #[test]
-//     fn it_works() {
-//         let result = add(2, 2);
-//         assert_eq!(result, 4);
-//     }
-// }
+///
+/// 
+pub mod stuff;
