@@ -9,9 +9,14 @@ pub struct Teardown<'a> {
     each: &'a dyn Fn() -> (),
     once: &'a dyn Fn() -> (),
 }
-
+///
+/// 
 impl Teardown<'_> {
-    fn new<'a>(count: &'a AtomicUsize, each: &'a dyn Fn() -> (), once: &'a dyn Fn() -> ()) -> Teardown<'a> {
+    ///
+    /// count - is a AtomicUsize shared between tests having mutual teardown::once action
+    /// each - closure called after exact test function
+    /// once - closure called after the last test function having mutual "count"
+    pub fn new<'a>(count: &'a AtomicUsize, each: &'a dyn Fn() -> (), once: &'a dyn Fn() -> ()) -> Teardown<'a> {
         Teardown {
             count,
             each,
@@ -19,7 +24,8 @@ impl Teardown<'_> {
         }
     }
 }
-
+///
+/// 
 impl Drop for Teardown<'_> {
     fn drop(&mut self) {
         let _ = &(self.each)();
