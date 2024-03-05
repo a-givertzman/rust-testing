@@ -4,7 +4,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 /// Taerdown provides calling a code at the end of the test function 
 ///  - each - calling only for current test function
 ///  - once - called only after all test functions 
-struct Teardown<'a> {
+pub struct Teardown<'a> {
     count: &'a AtomicUsize,
     each: &'a dyn Fn() -> (),
     once: &'a dyn Fn() -> (),
