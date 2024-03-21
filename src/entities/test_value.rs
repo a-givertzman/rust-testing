@@ -4,7 +4,8 @@
 pub enum Value {
     Bool(bool),
     Int(i64),
-    Float(f64),
+    Real(f32),
+    Double(f64),
     String(String),
 }
 impl Value {
@@ -12,7 +13,8 @@ impl Value {
         match &self {
             Value::Bool(v) => v.to_string(),
             Value::Int(v) => v.to_string(),
-            Value::Float(v) => v.to_string(),
+            Value::Real(v) => v.to_string(),
+            Value::Double(v) => v.to_string(),
             Value::String(v) => v.to_string(),
         }
     }
@@ -33,10 +35,18 @@ impl Value {
         }
     }
     ///
-    /// Returns Float content, otherwise panic
-    pub fn as_float(&self) -> f64 {
+    /// Returns Double content, otherwise panic
+    pub fn as_real(&self) -> f32 {
         match self {
-            Value::Float(value) => *value,
+            Value::Real(value) => *value,
+            _ => panic!("Value.asFloat | {:?} - is not a Float", self),
+        }
+    }
+    ///
+    /// Returns Double content, otherwise panic
+    pub fn as_double(&self) -> f64 {
+        match self {
+            Value::Double(value) => *value,
             _ => panic!("Value.asFloat | {:?} - is not a Float", self),
         }
     }

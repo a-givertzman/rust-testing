@@ -37,7 +37,7 @@ impl Iterator for RandomTestValues {
             self.iterations -= 1;
             if self.initial.is_empty() {
                 let value = self.rnd.gen_range((f64::MIN / 2.0)..(f64::MAX / 2.0));
-                return Some(Value::Float(value))
+                return Some(Value::Double(value))
             } else {
                 let index = self.rnd.gen_range(0..self.initial.len());
                 match self.initial.get(index) {
