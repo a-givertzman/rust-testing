@@ -12,6 +12,7 @@ pub struct RandomTestValues {
     initial: Vec<Value>,
     iterations: usize,
     rnd: ThreadRng,
+    prev: usize,
 }
 ///
 /// 
@@ -24,14 +25,24 @@ impl RandomTestValues {
             initial,
             iterations,
             rnd: rand::thread_rng(),
+            prev: 0,
         }
     }
+    ///
+    /// 
+    fn get_random_index(&mut self) -> usize {
+        let mut random = self.rnd.gen_range(0..self.initial.len());
+        while random == self.prev {
+            random = self.rnd.gen_range(0..self.initial.len());
+        }
+        self.prev = random;
+        random
     }
+}
 ///
 /// Iterates through the random value
 impl Iterator for RandomTestValues {
     type Item = Value;
-    //
     fn next(&mut self) -> Option<Self::Item> {
         if self.iterations > 0 {
             self.iterations -= 1;
@@ -39,7 +50,8 @@ impl Iterator for RandomTestValues {
                 let value = self.rnd.gen_range((f64::MIN / 2.0)..(f64::MAX / 2.0));
                 return Some(Value::Double(value))
             } else {
-                let index = self.rnd.gen_range(0..self.initial.len());
+                // let index = self.rnd.gen_range(0..self.initial.len());
+                let index = Self::get_random_index(self);
                 match self.initial.get(index) {
                     Some(value) => {
                         return Some(value.clone());
