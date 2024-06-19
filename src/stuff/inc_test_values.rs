@@ -33,7 +33,7 @@ impl Iterator for IncTestValues {
             self.iterations -= 1;
             let value = self.value;
             self.value = value + 1;
-            debug!("{}.next | Шterations awalible: {}", self.id, self.iterations);
+            debug!("{}.next | Iterations awalible: {}", self.id, self.iterations);
             Some(Value::Int(value))
         } else {
             debug!("{}.next | No more iterations awalible", self.id);
