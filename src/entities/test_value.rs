@@ -1,6 +1,6 @@
 ///
 /// Enum wrapper for some elementary types
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub enum Value {
     Bool(bool),
     Int(i64),
