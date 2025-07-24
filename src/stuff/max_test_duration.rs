@@ -1,11 +1,9 @@
 use std::{time::{Duration, Instant}, thread::{JoinHandle, self}, sync::{Arc, atomic::{AtomicBool, Ordering}}};
 
-use log::error;
-
 ///
 /// If maximum test turation will be exceeded - the panics throwed
 pub struct TestDuration {
-    id: String,
+    dbg: String,
     duration: Duration,
     exit: Arc<AtomicBool>,
 }
@@ -18,7 +16,7 @@ impl TestDuration {
     /// - duration - maximum test duration
     pub fn new(parent: impl Into<String>, duration: Duration) -> Self {
         Self {
-            id: format!("{}/TestDuration", parent.into()),
+            dbg: format!("{}/TestDuration", parent.into()),
             duration,
             exit: Arc::new(AtomicBool::new(false)),
         }
@@ -26,10 +24,18 @@ impl TestDuration {
     ///
     /// The countdown begins, exiting process with error code 70 if duration exceeded
     pub fn run(&self) -> Result<JoinHandle<()>, std::io::Error> {
-        let self_id = self.id.clone();
+        let dbg = self.dbg.clone();
+        let dbg_cln = self.dbg.clone();
         let exit = self.exit.clone();
         let duration = self.duration.clone();
-        thread::Builder::new().name(format!("{}.run", self_id)).spawn(move || {
+        let orig_hook = std::panic::take_hook();
+        std::panic::set_hook(Box::new(move |panic_info| {
+            let dbg = &dbg_cln;
+            // invoke the default handler and exit the process
+            orig_hook(panic_info);
+            panic!("{}.run | Terminated", dbg);
+        }));
+        thread::Builder::new().name(format!("{}.run", dbg)).spawn(move || {
             let timer = Instant::now();
             loop {
                 if exit.load(Ordering::SeqCst) {
@@ -40,10 +46,10 @@ impl TestDuration {
                     break;
                 }
                 if timer.elapsed() > duration {
-                    error!("{}.run | Maximum test duration ({:?}) exceeded", self_id, duration);
-                    std::process::exit(70);   // SOFTWARE: ExitCode = 70
+                    log::error!("{}.run | Maximum test duration ({:?}) exceeded", dbg, duration);
+                    panic!("{}.run | Terminating...", dbg);
+                    // std::process::exit(70);   // SOFTWARE: ExitCode = 70
                 }
-
             }
         })
     }
