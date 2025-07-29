@@ -32,7 +32,6 @@ impl TestDuration {
         std::panic::set_hook(Box::new(move |panic_info| {
             let dbg = &dbg_cln;
             // invoke the default handler and exit the process
-            println!("{dbg}.run | PanicInfo: {:#?}", panic_info);
             orig_hook(panic_info);
             if let Some(location) = panic_info.location() {
                 if location.file().ends_with("max_test_duration.rs") {
