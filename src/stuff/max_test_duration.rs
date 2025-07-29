@@ -32,8 +32,9 @@ impl TestDuration {
         std::panic::set_hook(Box::new(move |panic_info| {
             let dbg = &dbg_cln;
             // invoke the default handler and exit the process
+            println!("{dbg}.run | PanicInfo: {:#?}", panic_info);
             orig_hook(panic_info);
-            panic!("{}.run | Terminated", dbg);
+            panic!("{dbg}.run | Terminated");
         }));
         thread::Builder::new().name(format!("{}.run", dbg)).spawn(move || {
             let timer = Instant::now();
