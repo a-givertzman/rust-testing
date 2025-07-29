@@ -34,7 +34,11 @@ impl TestDuration {
             // invoke the default handler and exit the process
             println!("{dbg}.run | PanicInfo: {:#?}", panic_info);
             orig_hook(panic_info);
-            panic!("{dbg}.run | Terminated");
+            if let Some(location) = panic_info.location() {
+                if location.file().ends_with("max_test_duration.rs") {
+                    panic!("{dbg}.run | Terminated");
+                }
+            }
         }));
         thread::Builder::new().name(format!("{}.run", dbg)).spawn(move || {
             let timer = Instant::now();
